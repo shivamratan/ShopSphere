@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'core/router/app_router.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -10,22 +12,8 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: .fromSeed(seedColor: Colors.deepPurple),
-      ),
-      home: Scaffold(
-        appBar: AppBar(title: Text('Shop Sphere')),
-        body: const Center(
-            child: Text('Flutter Demo Home Page')
-        ),
-        floatingActionButton: FloatingActionButton(
-            child: Icon(Icons.add),
-            onPressed: () {
-          print('Fab clicked');
-        }),
-      )
+    return MaterialApp.router(
+      routerConfig: appRouter,
     );
   }
 }
