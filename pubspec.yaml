@@ -35,6 +35,21 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8
 
+  #Networking dependency
+  dio: ^5.8.0 # Powerful HTTP client for Dart/Flutter
+
+  #State Management + Dependency Injection
+  flutter_riverpod: ^2.6.1 # Reactive state management and dependency injection
+
+  #High level Navigation dependency on top of Navigator
+  go_router: ^14.7.1 # Declarative routing library based on the Router API
+
+  #Persistence Dependency
+  drift: ^2.25.0 # Reactive persistence library for Flutter and Dart
+  sqlite3_flutter_libs: ^0.5.24 # Required native libraries to run sqlite3 on Android/iOS
+  path_provider: ^2.1.5 # Plugin for finding commonly used locations on the filesystem
+  path: ^1.9.1 # A comprehensive library for manipulating paths
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -45,6 +60,8 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^6.0.0
+  drift_dev: ^2.25.0 # Development tool to generate code for Drift databases
+  build_runner: ^2.4.15 # Command-line tool for generating files from Dart code
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
