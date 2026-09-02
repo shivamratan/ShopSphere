@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shopsphere/core/router/route_names.dart';
+import 'package:shopsphere/core/utils/MyFlutterUtils.dart';
 
 class LoginScreen extends StatelessWidget {
 
@@ -9,31 +10,88 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: AppBar(
-        title: Text('Login Screen')
+        title: const Text('Login Screen'),
+        backgroundColor: Colors.blueAccent,
+        foregroundColor: Colors.white,
       ),
-      body: Center(
-        child: Column(
-          children: [
-            const Text('Login Screen'),
-            const SizedBox(height: 10,),
-            ElevatedButton(
-                onPressed: () {
-                  context.push(RouteNames.signup);
-                },
-                child: const Text('Signup Screen')
+      body: Padding(
+        padding: EdgeInsetsGeometry.symmetric(vertical: 10, horizontal: 10),
+        child: Center(
+          child: SingleChildScrollView(
+            child:           Column(
+              /*mainAxisAlignment: MainAxisAlignment.center,*/
+              children: [
+                Column(
+                  children: [
+                    SizedBox(height: 40,),
+                    Image(image: AssetImage('assets/images/shopsphere_logo.png'), height: 100, width: 100,),
+                    Text('ShopSphere', style: TextStyle(color: Colors.black, fontSize: 30, fontWeight: FontWeight.bold),),
+                  ],
+                ),
+                SizedBox(height: 50,),
+                Container(
+                  margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                  child: Column(
+                    children: [
+                      TextFormField(
+                        decoration: InputDecoration(
+                          labelText: 'Email',
+                          border: OutlineInputBorder(),
+                        ),
+                      ),
+                      SizedBox(height: 15,),
+                      TextFormField(
+                        decoration: InputDecoration(
+                          labelText: 'Password',
+                          border: OutlineInputBorder(),
+                        ),
+                      ),
+                      SizedBox(height: 10,),
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: TextButton(
+                            style: TextButton.styleFrom(padding: EdgeInsets.zero),
+                            onPressed: () {
+                              MyFlutterUtils.showSnackBar(context, 'Forgot Password?');
+                            },
+                            child: Text(
+                              'Forgot Password?',
+                              style: TextStyle(
+                                color: Colors.blue,
+                                decoration: TextDecoration.underline,
+                              ),
+                            )
+                        ),
+                      ),
+                      SizedBox(height: 2,),
+                      ElevatedButton(
+                        onPressed: () {
+                          context.go(RouteNames.home);
+                        },
+                        child: Text('Login'),
+                      ),
+                      SizedBox(height: 10,),
+                      TextButton(
+                        onPressed: (){
+                          context.push(RouteNames.signup);
+                        },
+                        child: Text("Don't have Account? Signup",
+                          style: TextStyle(
+                            color: Colors.blue,
+                            decoration: TextDecoration.underline,
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+
+              ],
             ),
-            const SizedBox(height: 10,),
-            ElevatedButton(
-                onPressed: () {
-                  context.go(RouteNames.home);
-                },
-                child: const Text('Home Screen')
-            )
-          ],
-        )
+          )
+        ),
       )
     );
   }
