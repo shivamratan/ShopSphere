@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shopsphere/core/router/route_names.dart';
+import 'package:shopsphere/core/utils/MyFlutterUtils.dart';
 import 'package:shopsphere/features/auth/domain/usecase/signup_validation_usecase.dart';
+import 'package:shopsphere/features/auth/presentation/provider/auth_provider.dart';
 import 'package:shopsphere/features/auth/presentation/widget/custom_auth_text_field.dart';
 
 class SignupScreen extends ConsumerStatefulWidget {
@@ -31,6 +33,7 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
   @override
   Widget build(BuildContext context) {
     final validationUseCase = ref.watch(signupValidationUseCaseProvider);
+    final isLoading = ref.watch(authControllerProvider);
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -139,12 +142,30 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
                   width: double.infinity,
                   height: 56,
                   child: ElevatedButton(
-                    onPressed: () {
-                      if (_formKey.currentState!.validate()) {
-                        // TODO: Implement Sign Up logic
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text('Processing Sign Up...')),
-                        );
+                    onPressed: isLoading ? null : () async {
+
+                      try {
+                        ref
+                            .read(authControllerProvider.notifier)
+                            .state = true;
+                        if (_formKey.currentState!.validate()) {
+                          await ref.read(authRepoProvider).signUpWithEmail(
+                            name: _nameController.text,
+                            email: _emailController.text,
+                            password: _passwordController.text,
+                          );
+
+                          if (context.mounted) {
+                            context.pop();
+                            MyFlutterUtils.showSnackBar(context, 'Sign Up Successful');
+                          }
+                        }
+                      } catch(e) {
+                        if (mounted) {
+                          MyFlutterUtils.showSnackBar(context, e.toString());
+                        }
+                      } finally {
+                        ref.read(authControllerProvider.notifier).state = false;
                       }
                     },
                     style: ElevatedButton.styleFrom(
@@ -155,7 +176,16 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
                       ),
                       elevation: 0,
                     ),
-                    child: const Text(
+                    child:
+                    isLoading ? const SizedBox(
+                      height: 20,
+                      width: 20,
+                      child: CircularProgressIndicator(
+                        color: Colors.blueAccent,
+                        strokeWidth: 2,
+                      ),
+                    )
+                    : const Text(
                       'Sign Up',
                       style: TextStyle(
                         fontSize: 18,
