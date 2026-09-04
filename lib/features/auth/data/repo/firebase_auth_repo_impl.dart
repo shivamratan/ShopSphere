@@ -13,7 +13,7 @@ class FirebaseAuthRepoImpl implements AuthRepo {
   Stream<User?> get authStateChanges => _firebaseAuth.authStateChanges();
 
   @override
-  Future<UserCredential> signInWithEmail(String email, String password) async {
+  Future<UserCredential> signInWithEmail({required String email,required String password}) async {
     return _firebaseAuth.signInWithEmailAndPassword(email: email, password: password);
   }
 

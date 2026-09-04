@@ -7,6 +7,7 @@ import 'package:shopsphere/core/utils/MyFlutterUtils.dart';
 import 'package:shopsphere/features/auth/presentation/widget/custom_auth_text_field.dart';
 
 import '../../domain/usecase/login_validation_usecase.dart';
+import '../provider/auth_provider.dart';
 
 class LoginScreen extends ConsumerStatefulWidget {
   const LoginScreen({super.key});
@@ -33,6 +34,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     final validationUseCase = ref.watch(loginUseCaseProvider);
+    final isLoading = ref.watch(authControllerProvider);
+    final isGoogleAuthLoading = ref.watch(googleAuthControllerProvider);
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -135,11 +138,27 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   width: double.infinity,
                   height: 56,
                   child: ElevatedButton(
-                    onPressed: () {
+                    onPressed: isLoading ? null : () async {
+                      try {
+                        ref.read(authControllerProvider.notifier).state = true;
 
-                      // Triggering the validation check before making call
-                      if (_formKey.currentState!.validate()) {
-                        context.go(RouteNames.home);
+                        // Triggering the validation check before making call
+                        if (_formKey.currentState!.validate()) {
+                          await ref.read(authRepoProvider).signInWithEmail(
+                            email: _emailController.text,
+                            password: _passwordController.text,
+                          );
+
+                          if (context.mounted) {
+                            context.go(RouteNames.home);
+                            MyFlutterUtils.showSnackBar(
+                                context, 'Login Successful');
+                          }
+                        }
+                      } catch(e) {
+                        MyFlutterUtils.showSnackBar(context, e.toString());
+                      } finally {
+                        ref.read(authControllerProvider.notifier).state = false;
                       }
 
                     },
@@ -151,7 +170,14 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                       ),
                       elevation: 0,
                     ),
-                    child: const Text(
+                    child: isLoading ? const SizedBox(
+                      height: 20,
+                      width: 20,
+                      child: CircularProgressIndicator(
+                        color: Colors.blueAccent,
+                        strokeWidth: 2,
+                      ),
+                    ) : const Text(
                       'Login',
                       style: TextStyle(
                         fontSize: 18,
