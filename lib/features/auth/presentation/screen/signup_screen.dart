@@ -8,6 +8,8 @@ import 'package:shopsphere/features/auth/domain/usecase/signup_validation_usecas
 import 'package:shopsphere/features/auth/presentation/provider/auth_provider.dart';
 import 'package:shopsphere/features/auth/presentation/widget/custom_auth_text_field.dart';
 
+import '../../domain/model/user.dart';
+
 class SignupScreen extends ConsumerStatefulWidget {
   const SignupScreen({super.key});
 
@@ -35,6 +37,7 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
     final validationUseCase = ref.watch(signupValidationUseCaseProvider);
     final isLoading = ref.watch(authControllerProvider);
     final isGoogleAuthLoading = ref.watch(googleAuthControllerProvider);
+    final fireStoreRepo = ref.read(fireStoreRepoProvider);
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -151,13 +154,22 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
                               .read(authControllerProvider.notifier)
                               .state = true;
                           if (_formKey.currentState!.validate()) {
-                            await ref.read(authRepoProvider).signUpWithEmail(
+                            final userCredential = await ref.read(authRepoProvider).signUpWithEmail(
                               name: _nameController.text,
                               email: _emailController.text,
                               password: _passwordController.text,
                             );
 
-                            if (context.mounted) {
+                          if (userCredential != null) {
+                            await fireStoreRepo.saveUser(User(
+                                id: userCredential.user!.uid,
+                                name: _nameController.text,
+                                email: _emailController.text,
+                                createdAt: DateTime.now()
+                            ));
+                          }
+
+                            if (context.mounted && userCredential != null) {
                               context.pop();
                               MyFlutterUtils.showSnackBar(context, 'Sign Up Successful');
                             }
@@ -236,6 +248,14 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
                             ref.watch(googleAuthControllerProvider.notifier).state = false;
 
                             if (userCredential != null) {
+                              await fireStoreRepo.saveUser(User(
+                                  id: userCredential.user!.uid,
+                                  name: userCredential.user!.displayName ?? "",
+                                  email: userCredential.user!.email ?? "",
+                                  profilePic: userCredential.user!.photoURL,
+                                  createdAt: DateTime.now()
+                              ));
+
                               if (context.mounted) {
                                 context.go(RouteNames.home);
                                 MyFlutterUtils.showSnackBar(
