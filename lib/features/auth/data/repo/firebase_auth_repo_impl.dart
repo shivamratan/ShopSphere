@@ -28,16 +28,23 @@ class FirebaseAuthRepoImpl implements AuthRepo {
 
   @override
   Future<UserCredential?> signInWithGoogle() async {
-    final GoogleSignInAccount? googleSignInAccount = await _googleSignIn.signIn();
-    if (googleSignInAccount == null) {
+    try {
+      final GoogleSignInAccount? googleSignInAccount = await _googleSignIn
+          .signIn();
+      if (googleSignInAccount == null) {
+        return null;
+      }
+      final GoogleSignInAuthentication googleSignInAuthentication = await googleSignInAccount
+          .authentication;
+      final AuthCredential credential = GoogleAuthProvider.credential(
+        accessToken: googleSignInAuthentication.accessToken,
+        idToken: googleSignInAuthentication.idToken,
+      );
+      return _firebaseAuth.signInWithCredential(credential);
+    } catch(e) {
+      print("Google signin error $e");
       return null;
     }
-    final GoogleSignInAuthentication googleSignInAuthentication = await googleSignInAccount.authentication;
-    final AuthCredential credential = GoogleAuthProvider.credential(
-      accessToken: googleSignInAuthentication.accessToken,
-      idToken: googleSignInAuthentication.idToken,
-    );
-    return _firebaseAuth.signInWithCredential(credential);
   }
 
   @override

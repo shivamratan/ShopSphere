@@ -7,3 +7,6 @@ final authRepoProvider = Provider<AuthRepo>((ref) => FirebaseAuthRepoImpl());
 
 // Loading state for handling the login & signup during Firebase login/signup
 final authControllerProvider = StateProvider<bool>((ref) => false);
+
+// Loading state for handling the login & signup during Google login/signup
+final googleAuthControllerProvider = StateProvider<bool>((ref) => false);
