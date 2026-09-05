@@ -7,7 +7,9 @@ import '../../domain/repo/firestore_repo.dart';
 
 class FirestoreRepoImpl implements FirestoreRepo {
 
-  final fireStore = FirebaseFirestore.instance;
+  final fireStore;
+
+  FirestoreRepoImpl({required this.fireStore});
 
   @override
   Future<User?> getUserByEmail(String email) async {
