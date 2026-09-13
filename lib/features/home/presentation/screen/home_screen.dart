@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shopsphere/features/profile/presentation/screen/profile_screen.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
 
@@ -20,15 +21,12 @@ class _HomeScreenState extends ConsumerState<ConsumerStatefulWidget> {
     const Center(child: Text('Dashboard'),),
     const Center(child: Text('Products'),),
     const Center(child: Text('Cart'),),
-    const Center(child: Text('Profile'),),
+    const Center(child: ProfileScreen(),),
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-            title: Text('Home Screen')
-        ),
         body: IndexedStack(
           index: screenIndex,
           children: _screens,
