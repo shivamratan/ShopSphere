@@ -1,5 +1,6 @@
 
 import 'package:drift/drift.dart';
+import 'package:shopsphere/features/dashboard/domain/model/product_category_model.dart';
 
 import '../../../features/dashboard/data/dto/product_category.dart';
 
