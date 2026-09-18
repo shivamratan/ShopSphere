@@ -9,7 +9,7 @@ part 'product_category_dao.g.dart';
 
 @DriftAccessor(tables: [ProductCategoryTable])
 class ProductCategoryDao extends DatabaseAccessor<ShopsphereDb> with _$ProductCategoryDaoMixin {
-  ProductCategoryDao(ShopsphereDb db) : super(db);
+  ProductCategoryDao(super.db);
 
   // The return type should be the generated Data class (ProductCategoryData)
   // and the table getter name is typically the table class name in camelCase (productCategory)

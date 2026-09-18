@@ -7,7 +7,7 @@ class DioClient {
   DioClient(this._dio) {
     _dio
       ..options
-          .baseUrl = 'https://dummyjson.com/products/' // Replace with your base URL
+          .baseUrl = 'https://dummyjson.com/' // Replace with your base URL
       ..options.connectTimeout = const Duration(seconds: 15)
       ..options.receiveTimeout = const Duration(seconds: 15)
       ..options.responseType = ResponseType.json
