@@ -5,8 +5,10 @@ import 'package:shopsphere/features/auth/domain/repo/AuthRepo.dart';
 
 class FirebaseAuthRepoImpl implements AuthRepo {
 
-  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
-  final GoogleSignIn _googleSignIn = GoogleSignIn();
+  final FirebaseAuth _firebaseAuth;
+  final GoogleSignIn _googleSignIn;
+
+  FirebaseAuthRepoImpl({required this._firebaseAuth, required this._googleSignIn});
 
 
   @override

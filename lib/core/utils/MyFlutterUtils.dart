@@ -19,4 +19,41 @@ class MyFlutterUtils {
     );
   }
 
+  static void showAlertDialog(
+      {required BuildContext context,
+      required String title,
+      required String content,
+      required String positiveButtonText,
+      required String negativeButtonText,
+      required VoidCallback? onPositiveButtonClick,
+      required VoidCallback? onNegativeButtonClick,}) {
+
+        showDialog(
+            context: context,
+            builder: (context) {
+              return AlertDialog(
+                title: Text(title),
+                content: Text(content),
+                actions: [
+                  TextButton(
+                    onPressed: () {
+                      print("$negativeButtonText clicked");
+                      onNegativeButtonClick?.call();
+                    },
+                    child: Text(negativeButtonText),
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      print("$positiveButtonText clicked");
+                      onPositiveButtonClick?.call();
+                    },
+                    child: Text(positiveButtonText),
+                  ),
+                ],
+              );
+            }
+        );
+
+  }
+
 }
