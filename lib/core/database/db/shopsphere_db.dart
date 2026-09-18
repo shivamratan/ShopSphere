@@ -32,8 +32,19 @@ class ShopsphereDb extends _$ShopsphereDb {
   ShopsphereDb(): super(_openConnection());
 
   @override
-  int get schemaVersion => 1;
+  int get schemaVersion => 2;
 
+  @override
+  MigrationStrategy get migration => MigrationStrategy(
+        onCreate: (m) => m.createAll(),
+        onUpgrade: (m, from, to) async {
+          if (from < 2) {
+            // we added the featured and popular product tables in v2
+            await m.createTable(featureProductTable);
+            await m.createTable(popularProductTable);
+          }
+        },
+  );
 }
 
 LazyDatabase _openConnection() {
