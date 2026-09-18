@@ -12,10 +12,35 @@ class CategoriesSection extends ConsumerWidget {
     final categoryAsyncValue = ref.watch(productCategoriesFutureProvider);
 
     return Container(
-      margin: EdgeInsets.only(top: 5),
+      margin: const EdgeInsets.only(top: 10.0),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text('Categories'),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text(
+                  'Categories',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                TextButton(
+                  onPressed: () {},
+                  child: const Row(
+                    children: [
+                      Text('See'),
+                      SizedBox(width: 4),
+                      Icon(Icons.arrow_forward, size: 16),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
           categoryAsyncValue.when(
             loading: () => const Center(
               child: CircularProgressIndicator(),
