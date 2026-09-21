@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shopsphere/features/dashboard/presentation/screen/dashboard_screen.dart';
+import 'package:shopsphere/features/product/presentation/screen/product_screen.dart';
 import 'package:shopsphere/features/profile/presentation/screen/profile_screen.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
@@ -20,7 +21,7 @@ class _HomeScreenState extends ConsumerState<ConsumerStatefulWidget> {
 
   final List<Widget> _screens = [
     const Center(child: DashboardScreen(),),
-    const Center(child: Text('Products'),),
+    const Center(child: ProductScreen(),),
     const Center(child: Text('Cart'),),
     const Center(child: ProfileScreen(),),
   ];

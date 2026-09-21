@@ -19,3 +19,7 @@ final featureProductDaoProvider = Provider<FeatureProductDao>((ref) {
 final popularProductDaoProvider = Provider<PopularProductDao>((ref) {
   return ref.watch(databaseProvider).popularProductDao;
 });
+
+final productDaoProvider = Provider((ref) {
+  return ref.watch(databaseProvider).productDao;
+});
