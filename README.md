@@ -2,6 +2,13 @@
 
 ShopSphere is a modern, high-performance e-commerce mobile application built with Flutter. It follows Clean Architecture principles to provide a scalable, maintainable, and robust shopping experience.
 
+# Demo
+
+https://github.com/user-attachments/assets/e283bcbe-c810-46ae-8200-5011462c41f4
+
+
+
+
 ## 🌟 Introduction
 ShopSphere aims to bridge the gap between a seamless online shopping experience and reliable offline functionality. Whether you're browsing the latest tech gadgets or everyday essentials, ShopSphere provides a fast, intuitive, and data-efficient interface.
 
