@@ -64,18 +64,6 @@ class _ProductScreenState extends ConsumerState<ProductScreen> {
           ],
         ),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: 1,
-        selectedItemColor: Colors.green.shade700,
-        unselectedItemColor: Colors.grey,
-        type: BottomNavigationBarType.fixed,
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home_outlined), label: 'Home'),
-          BottomNavigationBarItem(icon: Icon(Icons.grid_view), label: 'Products'),
-          BottomNavigationBarItem(icon: Icon(Icons.shopping_cart_outlined), label: 'Cart'),
-          BottomNavigationBarItem(icon: Icon(Icons.person_outline), label: 'Profile'),
-        ],
-      ),
     );
   }
 
